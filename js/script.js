@@ -49,6 +49,22 @@
 })();
 
 (() => {
+  const items = [...document.querySelectorAll('.real-estate-inline__item')];
+
+  items.forEach((item) => {
+    const trigger = item.querySelector('button');
+    const panel = item.querySelector('.real-estate-inline__panel');
+
+    trigger.addEventListener('click', () => {
+      const willOpen = trigger.getAttribute('aria-expanded') !== 'true';
+      item.classList.toggle('is-open', willOpen);
+      trigger.setAttribute('aria-expanded', String(willOpen));
+      panel.setAttribute('aria-hidden', String(!willOpen));
+    });
+  });
+})();
+
+(() => {
   const items = [...document.querySelectorAll('.expertise-item')];
   if (!items.length) return;
 
