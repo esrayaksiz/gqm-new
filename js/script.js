@@ -1,10 +1,18 @@
 (() => {
+  const hero = document.querySelector('.hero');
   const slides = [...document.querySelectorAll('.hero__slide')];
   const copies = [...document.querySelectorAll('.hero__copy-item')];
   const pagers = [...document.querySelectorAll('.hero__pager')];
   const interval = 6000;
   let current = 0;
   let timer;
+  let introTimer;
+
+  function completeIntro() {
+    if (!hero || hero.classList.contains('is-intro-complete')) return;
+    hero.classList.add('is-intro-complete');
+    window.clearTimeout(introTimer);
+  }
 
   function showSlide(index) {
     current = (index + slides.length) % slides.length;
@@ -44,6 +52,15 @@
     if (document.hidden) window.clearInterval(timer);
     else restartTimer();
   });
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    completeIntro();
+  } else {
+    introTimer = window.setTimeout(completeIntro, 2400);
+    window.addEventListener('wheel', completeIntro, { once: true, passive: true });
+    window.addEventListener('touchmove', completeIntro, { once: true, passive: true });
+    window.addEventListener('keydown', completeIntro, { once: true });
+  }
 
   restartTimer();
 })();

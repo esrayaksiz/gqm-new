@@ -67,46 +67,62 @@ button, a { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
-  border: 1px solid rgba(255,255,255,.88);
+  height: 60px;
+  border: .75px solid rgba(255,255,255,.95);
   background: transparent;
   color: var(--white);
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 23px;
+  font-size: 18px;
   font-weight: 300;
-  letter-spacing: .01em;
+  letter-spacing: .045em;
+  opacity: 0;
+  transition: opacity .65s ease .45s, border-color .3s ease;
 }
 
-.menu-button { width: 156px; gap: 19px; cursor: pointer; }
-.enquire-button { justify-self: end; width: 156px; }
+.menu-button { width: 150px; gap: 18px; cursor: pointer; }
+.enquire-button { justify-self: end; width: 150px; }
 
-.menu-button__icon { width: 44px; display: grid; gap: 10px; }
-.menu-button__icon i { display: block; height: 1px; background: currentColor; }
+.menu-button__icon { width: 40px; display: grid; gap: 9px; }
+.menu-button__icon i { display: block; height: 1px; background: #fff; opacity: 1; }
 
 .brand {
   display: grid;
   place-items: start center;
-  width: 170px;
-  height: 112px;
+  width: 204px;
+  height: 108px;
   overflow: hidden;
   color: var(--white);
   text-decoration: none;
+  position: relative;
+  z-index: 5;
+  transform: translateY(calc(50svh - clamp(25px, 5.8vh, 62px) - 54px)) scale(2.15);
+  transform-origin: center top;
+  transition: transform 1.15s cubic-bezier(.76, 0, .24, 1);
+  pointer-events: none;
 }
 
 .brand__logo {
-  width: 150px;
-  height: 150px;
+  width: 184px;
+  height: 184px;
   object-fit: contain;
-  transform: translateY(-16px);
+  transform: translateY(-34px);
 }
+
+.hero.is-intro-complete .brand {
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.hero.is-intro-complete .menu-button,
+.hero.is-intro-complete .enquire-button { opacity: 1; }
 
 .hero__copy {
   position: absolute;
   z-index: 2;
   left: var(--edge);
   right: var(--edge);
-  bottom: clamp(66px, 7.1vh, 82px);
+  bottom: clamp(94px, 10.5vh, 122px);
   min-height: 143px;
   pointer-events: none;
 }
@@ -146,6 +162,12 @@ button, a { font: inherit; }
   font-synthesis: none;
 }
 
+.hero__copy em {
+  font-family: inherit;
+  font-style: italic;
+  font-weight: 400;
+}
+
 .hero__copy-item[data-copy="2"] h2,
 .hero__copy-item[data-copy="2"] p {
   text-shadow: 0 2px 14px rgba(0,0,0,.8), 0 1px 3px rgba(0,0,0,.85);
@@ -166,7 +188,7 @@ button, a { font: inherit; }
   height: 18px;
   padding: 8px 0;
   border: 0;
-  background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)) center/100% 1px no-repeat;
+  background: linear-gradient(rgba(255,255,255,.72), rgba(255,255,255,.72)) center/100% 1px no-repeat;
   cursor: pointer;
 }
 
@@ -519,12 +541,16 @@ button, a { font: inherit; }
 @media (max-width: 760px) {
   .hero { min-height: 480px; }
   .hero__header { top: 22px; align-items: start; }
-  .menu-button, .enquire-button { height: 46px; width: 102px; font-size: 14px; }
+  .menu-button, .enquire-button { height: 45px; width: 100px; font-size: 13px; }
   .menu-button { gap: 10px; }
   .menu-button__icon { width: 25px; gap: 7px; }
-  .brand { width: 112px; height: 78px; }
-  .brand__logo { width: 100px; height: 100px; transform: translateY(-10px); }
-  .hero__copy { bottom: 67px; min-height: 110px; }
+  .brand {
+    width: 124px;
+    height: 66px;
+    transform: translateY(calc(50svh - 22px - 33px)) scale(2.05);
+  }
+  .brand__logo { width: 114px; height: 114px; transform: translateY(-21px); }
+  .hero__copy { bottom: 88px; min-height: 110px; }
   .hero__copy h1, .hero__copy h2 { font-size: clamp(25px, 7vw, 34px); line-height: 1.16; }
   .hero__copy h1 br, .hero__copy h2 br { display: none; }
   .hero__copy p { margin-top: 7px; font-size: clamp(19px, 5.7vw, 27px); }
@@ -618,11 +644,11 @@ button, a { font: inherit; }
 }
 
 @media (max-width: 430px) {
-  .menu-button, .enquire-button { width: 82px; height: 42px; font-size: 12px; }
+  .menu-button, .enquire-button { width: 88px; height: 40px; font-size: 11px; }
   .menu-button { gap: 8px; }
   .menu-button__icon { width: 20px; }
-  .brand { width: 96px; height: 68px; }
-  .brand__logo { width: 88px; height: 88px; transform: translateY(-9px); }
+  .brand { width: 108px; height: 58px; }
+  .brand__logo { width: 100px; height: 100px; transform: translateY(-18px); }
 
   .beyond-management { min-height: 470px; padding-top: 70px; padding-bottom: 62px; }
   .beyond-management h2 { font-size: 36px; }
@@ -659,4 +685,5 @@ button, a { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .hero__slide, .hero__copy-item { transition-duration: .01ms; }
   .hero__slide.is-active .hero__image { animation: none; }
+  .brand, .menu-button, .enquire-button { transition: none; }
 }
