@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
+
+:root {
+  --paper: #eee9df;
+  --ink: #161512;
+  --line: rgba(22, 21, 18, .25);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); }
+button { font: inherit; }
+
+.real-estate-detail {
+  width: min(1480px, 100%);
+  margin: 0 auto;
+  padding: clamp(46px, 4.8vw, 78px) clamp(26px, 3.7vw, 58px) clamp(70px, 7vw, 112px);
+}
+
+.development-area {
+  padding: 0 0 clamp(70px, 7vw, 112px);
+  border-bottom: 1px solid var(--line);
+}
+
+.development-area + .development-area { padding-top: clamp(62px, 6vw, 98px); }
+.development-area:last-child { border-bottom: 0; }
+
+.development-area__header { max-width: 535px; }
+.development-area__header h1,
+.development-area__header h2 {
+  margin: 0;
+  font-family: "ivypresto-display", Georgia, serif;
+  font-size: clamp(24px, 2vw, 31px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.development-area__header h1 span,
+.development-area__header h2 span { font-family: Inter, Arial, sans-serif; font-size: .82em; font-weight: 300; }
+
+.development-area__header p {
+  margin: 23px 0 0;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.38;
+}
+
+.development-area__body {
+  margin-top: clamp(36px, 4vw, 62px);
+  display: grid;
+  grid-template-columns: minmax(270px, 510px) minmax(380px, 1fr);
+  align-items: start;
+  gap: clamp(55px, 6.5vw, 112px);
+}
+
+.development-area__body > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  object-fit: cover;
+}
+
+.detail-list { padding-top: clamp(7px, 2vw, 30px); }
+.detail-item { border-bottom: 1px solid var(--line); }
+.detail-item h2, .detail-item h3 { margin: 0; }
+
+.detail-item button {
+  width: 100%;
+  min-height: 78px;
+  padding: 0 10px 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: "ivypresto-display", Georgia, serif;
+  font-size: clamp(22px, 1.8vw, 29px);
+  font-weight: 300;
+  text-align: left;
+  cursor: pointer;
+}
+
+.detail-item button i {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  border-right: 1.25px solid currentColor;
+  border-bottom: 1.25px solid currentColor;
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1);
+}
+
+.detail-item button[aria-expanded="true"] i { transform: translateY(3px) rotate(225deg); }
+.detail-item button:focus-visible { outline: 1px solid var(--ink); outline-offset: -4px; }
+
+.detail-item__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .45s cubic-bezier(.22, 1, .36, 1), opacity .3s ease;
+}
+
+.detail-item__panel > div { overflow: hidden; }
+.detail-item__panel p {
+  max-width: 690px;
+  margin: 0;
+  padding: 0 46px 25px 6px;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.detail-item.is-open .detail-item__panel { grid-template-rows: 1fr; opacity: 1; }
+
+@media (max-width: 760px) {
+  .real-estate-detail { padding: 38px 24px 70px; }
+  .development-area { padding-bottom: 62px; }
+  .development-area + .development-area { padding-top: 56px; }
+  .development-area__header { max-width: none; }
+  .development-area__header h1, .development-area__header h2 { font-size: clamp(23px, 6.5vw, 29px); }
+  .development-area__header p { margin-top: 18px; font-size: 13px; line-height: 1.5; }
+  .development-area__body { margin-top: 30px; grid-template-columns: 1fr; gap: 30px; }
+  .development-area__body > img { aspect-ratio: 1 / .9; }
+  .detail-list { padding-top: 0; }
+  .detail-item button { min-height: 68px; padding-right: 5px; font-size: 21px; }
+  .detail-item__panel p { padding: 0 34px 23px 4px; font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .detail-item__panel, .detail-item button i { transition: none; }
+}
