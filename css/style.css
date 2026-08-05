@@ -368,18 +368,20 @@ button, a { font: inherit; }
 .expertise-accordion__eyebrow {
   margin: 0 0 32px;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-size: 17px;
+  font-size: 12px;
   font-weight: 300;
-  line-height: 1;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
 .expertise-accordion__header h2 {
   margin: 0;
-  font-family: "ivypresto-display", Georgia, serif;
-  font-size: clamp(40px, 3vw, 54px);
-  font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -.018em;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 50px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -.025em;
 }
 
 .expertise-accordion__intro {
@@ -840,8 +842,8 @@ button, a { font: inherit; }
     padding: 78px max(24px, var(--edge)) 76px;
   }
 
-  .expertise-accordion__eyebrow { margin-bottom: 22px; font-size: 13px; }
-  .expertise-accordion__header h2 { font-size: clamp(34px, 9vw, 43px); }
+  .expertise-accordion__eyebrow { margin-bottom: 22px; }
+  .expertise-accordion__header h2 { font-size: clamp(38px, 7.5vw, 46px); }
   .expertise-accordion__intro { margin-top: 34px; font-size: 14px; line-height: 1.5; }
   .expertise-accordion__intro br { display: none; }
   .expertise-accordion__items { margin-top: 68px; }
@@ -915,6 +917,8 @@ button, a { font: inherit; }
   .selected-projects__header { min-height: 470px; padding-top: 70px; padding-bottom: 62px; }
   .selected-projects__eyebrow { margin-bottom: 14px; font-size: 10px; }
   .selected-projects__header h2 { font-size: 36px; }
+  .expertise-accordion__eyebrow { font-size: 10px; }
+  .expertise-accordion__header h2 { font-size: 36px; }
   .selected-projects__description { font-size: 14px; line-height: 1.55; }
   .selected-projects__project { padding: 28px 24px 54px; }
   .selected-projects__summary h3 { font-size: 36px; }
