@@ -4,8 +4,25 @@
   padding: clamp(46px, 4.8vw, 78px) clamp(26px, 3.7vw, 58px) clamp(72px, 7vw, 112px);
 }
 
-.hotel-advisory .development-area__header { max-width: 760px; }
-.hotel-advisory .development-area__header h1 { font-size: clamp(29px, 2.7vw, 43px); text-transform: none; }
+.hotel-detail__intro { max-width: 700px; margin-bottom: clamp(66px, 7vw, 110px); }
+.hotel-detail__intro h1 {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: clamp(34px, 3.4vw, 52px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.hotel-detail__intro p {
+  max-width: 610px;
+  margin: 25px 0 0;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.hotel-advisory .development-area__header { max-width: 620px; }
 
 .detail-item__panel ul {
   margin: 0;
@@ -17,8 +34,14 @@
 }
 
 .preopening {
-  padding: clamp(72px, 7vw, 112px) 0 0;
-  border-top: 1px solid var(--line);
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-top: clamp(72px, 7vw, 112px);
+  padding: clamp(72px, 7vw, 112px) clamp(34px, 7vw, 112px) clamp(58px, 6vw, 94px);
+  transform: translateX(-50%);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .preopening__header { text-align: center; }
@@ -40,13 +63,22 @@
 }
 
 .preopening__carousel {
+  position: relative;
+  z-index: 1;
   width: min(900px, 100%);
   margin: clamp(48px, 5vw, 76px) auto 0;
   overflow: hidden;
-  background: #fff;
+  background: #f7f4ed;
+  color: #161512;
+  box-shadow: 24px 18px 0 rgba(22, 21, 18, .075), 46px 34px 0 rgba(22, 21, 18, .035);
 }
 
-.preopening__track { display: flex; transition: transform .75s cubic-bezier(.22, 1, .36, 1); }
+.preopening__track {
+  display: flex;
+  background: #f7f4ed;
+  transition: transform .85s cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
+}
 .preopening__slide {
   min-width: 100%;
   min-height: clamp(360px, 39vw, 520px);
@@ -80,30 +112,62 @@
   font-weight: 300;
 }
 
-.preopening__pagination { padding: 0 24px 24px; display: flex; justify-content: center; gap: 6px; }
+.preopening__controls {
+  margin-top: clamp(42px, 4vw, 62px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(22px, 3vw, 42px);
+}
+
+.preopening__pagination { display: flex; justify-content: center; gap: 8px; }
 .preopening__pagination button {
-  width: min(54px, 8vw);
-  height: 18px;
-  padding: 8px 0;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
   border: 0;
-  background: linear-gradient(#bbb8b0, #bbb8b0) center / 100% 1px no-repeat;
+  background: rgba(22, 21, 18, .18);
   cursor: pointer;
 }
 
-.preopening__pagination button.is-active { background-image: linear-gradient(#161512, #161512); }
-.preopening__pagination button:focus-visible { outline: 1px solid #161512; outline-offset: 2px; }
+.preopening__pagination button.is-active { background: var(--ink); }
+.preopening__pagination button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+
+.preopening__arrow {
+  width: 62px;
+  height: 62px;
+  padding: 0;
+  border: 1px solid rgba(22, 21, 18, .28);
+  background: transparent;
+  color: var(--ink);
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color .3s ease, background-color .3s ease;
+}
+
+.preopening__arrow:hover { border-color: rgba(22, 21, 18, .7); background: rgba(22, 21, 18, .035); }
+.preopening__arrow:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
 
 @media (max-width: 760px) {
   .hotel-detail { padding: 38px 24px 68px; }
-  .hotel-advisory .development-area__header h1 { font-size: 32px; }
+  .hotel-detail__intro { margin-bottom: 58px; }
+  .hotel-detail__intro h1 { font-size: 36px; }
+  .hotel-detail__intro p { margin-top: 20px; font-size: 13px; }
   .detail-item__panel ul { padding: 0 34px 22px 20px; font-size: 13px; }
   .preopening { padding-top: 58px; }
   .preopening__header h2 { font-size: 36px; }
   .preopening__header p { margin-top: 22px; font-size: 13px; }
-  .preopening__carousel { margin-top: 40px; }
+  .preopening { margin-top: 58px; padding: 58px 22px 52px; }
+  .preopening__carousel { width: calc(100% - 22px); margin-top: 40px; box-shadow: 10px 9px 0 rgba(22,21,18,.07), 18px 17px 0 rgba(22,21,18,.035); }
   .preopening__slide { min-height: 390px; padding: 48px 28px; }
   .preopening__slide h3 { font-size: 28px; }
-  .preopening__pagination { padding-right: 12px; padding-left: 12px; gap: 4px; }
+  .preopening__controls { margin-top: 38px; gap: 18px; }
+  .preopening__pagination { gap: 6px; }
+  .preopening__arrow { width: 50px; height: 50px; font-size: 29px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -14,6 +14,8 @@
   const track = carousel.querySelector('.preopening__track');
   const slides = [...carousel.querySelectorAll('.preopening__slide')];
   const pagination = carousel.querySelector('.preopening__pagination');
+  const previous = document.querySelector('.preopening__arrow--previous');
+  const next = document.querySelector('.preopening__arrow--next');
   let current = 0;
 
   const pagers = slides.map((slide, index) => {
@@ -27,7 +29,7 @@
   });
 
   function show(index) {
-    current = index;
+    current = (index + slides.length) % slides.length;
     track.style.transform = `translate3d(${-current * 100}%, 0, 0)`;
     slides.forEach((slide, slideIndex) => slide.setAttribute('aria-hidden', String(slideIndex !== current)));
     pagers.forEach((pager, pagerIndex) => {
@@ -37,5 +39,7 @@
     });
   }
 
+  previous.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
   show(0);
 })();
