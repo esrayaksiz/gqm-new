@@ -10,7 +10,7 @@ html, body { margin: 0; min-height: 100%; }
 body {
   background: #111;
   color: var(--white);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "ivypresto-display", Georgia, serif;
 }
 
 button, a { font: inherit; }
@@ -90,8 +90,8 @@ button, a { font: inherit; }
 }
 
 .brand__mark { width: 58px; height: 51px; margin-bottom: 6px; }
-.brand__name { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: .13em; }
-.brand__sub { margin-top: 3px; font-family: Georgia, 'Times New Roman', serif; font-size: 7px; letter-spacing: .48em; transform: translateX(.22em); }
+.brand__name { font-family: "ivypresto-display", Georgia, serif; font-size: 12px; letter-spacing: .13em; }
+.brand__sub { margin-top: 3px; font-family: "ivypresto-display", Georgia, serif; font-size: 7px; letter-spacing: .48em; transform: translateX(.22em); }
 
 .hero__copy {
   position: absolute;
@@ -127,7 +127,7 @@ button, a { font: inherit; }
 
 .hero__copy p {
   margin-top: 9px;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: "ivypresto-display", Georgia, serif;
   font-size: clamp(25px, 2.15vw, 41px);
   line-height: 1.13;
   letter-spacing: .015em;
@@ -165,12 +165,12 @@ button, a { font: inherit; }
   .brand__sub { font-size: 5px; }
   .hero__copy { bottom: 67px; min-height: 110px; }
   .hero__copy h1, .hero__copy h2 { font-size: clamp(25px, 7vw, 34px); line-height: 1.16; }
-  .hero__copy h1 br { display: none; }
+  .hero__copy h1 br, .hero__copy h2 br { display: none; }
   .hero__copy p { margin-top: 7px; font-size: clamp(19px, 5.7vw, 27px); }
   .hero__pagination { bottom: 20px; gap: 6px; }
   .hero__pager { width: 52px; }
-  .hero__slide:first-child .hero__image { object-position: 56% center; }
-  .hero__slide:nth-child(3) .hero__image { object-position: 57% center; }
+  .hero__slide:first-child .hero__image { object-position: 57% center; }
+  .hero__slide:nth-child(2) .hero__image { object-position: 56% center; }
 }
 
 @media (max-width: 430px) {
