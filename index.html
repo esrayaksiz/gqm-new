@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GQ Management International">
+    <title>GQ Management International</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <main>
+      <section class="hero" aria-label="GQ Management introduction">
+        <div class="hero__slides">
+          <article class="hero__slide is-active" data-slide="0" aria-hidden="false">
+            <img class="hero__image" src="GQM_IMAGES/hero/hero1.webp" alt="Contemporary residence reflected in an infinity pool">
+          </article>
+          <article class="hero__slide" data-slide="1" aria-hidden="true">
+            <img class="hero__image" src="GQM_IMAGES/hero/hero2.png" alt="Courtyard and pool surrounded by mature trees">
+          </article>
+          <article class="hero__slide" data-slide="2" aria-hidden="true">
+            <img class="hero__image" src="GQM_IMAGES/hero/hero3-1.png" alt="Executive working in a high-rise boardroom">
+          </article>
+        </div>
+
+        <header class="hero__header">
+          <button class="menu-button" type="button" aria-label="Open menu">
+            <span class="menu-button__icon" aria-hidden="true"><i></i><i></i></span>
+            <span>Menu</span>
+          </button>
+
+          <a class="brand" href="#" aria-label="GQ Management International home">
+            <svg class="brand__mark" viewBox="0 0 58 51" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="0.8">
+                <path d="M8 50V17h11V9h10V1M19 50V17h20V9h10v41M29 50V9h10v41M8 25h41M8 33h41M8 41h41M14 17v33M24 9v41M34 9v41M44 9v41M4 50h50"/>
+              </g>
+            </svg>
+            <span class="brand__name">GQ Management</span>
+            <span class="brand__sub">International</span>
+          </a>
+
+          <a class="enquire-button" href="#enquire">Enquire</a>
+        </header>
+
+        <div class="hero__copy" aria-live="polite">
+          <div class="hero__copy-item is-active" data-copy="0">
+            <h1>Every vision holds the potential to<br>become something exceptional.</h1>
+            <p>We bring the expertise to make it real.</p>
+          </div>
+          <div class="hero__copy-item" data-copy="1" aria-hidden="true">
+            <h2>Great places are built with vision.</h2>
+            <p>Lasting value is built with expertise.</p>
+          </div>
+          <div class="hero__copy-item" data-copy="2" aria-hidden="true">
+            <h2>We see beyond what exists today.</h2>
+            <p>We shape what creates value tomorrow.</p>
+          </div>
+        </div>
+
+        <div class="hero__pagination" role="tablist" aria-label="Choose hero slide">
+          <button class="hero__pager is-active" type="button" role="tab" aria-label="Show slide 1" aria-selected="true" data-go-to="0"></button>
+          <button class="hero__pager" type="button" role="tab" aria-label="Show slide 2" aria-selected="false" data-go-to="1"></button>
+          <button class="hero__pager" type="button" role="tab" aria-label="Show slide 3" aria-selected="false" data-go-to="2"></button>
+        </div>
+      </section>
+    </main>
+    <script src="js/script.js"></script>
+  </body>
+</html>
