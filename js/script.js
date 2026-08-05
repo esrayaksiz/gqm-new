@@ -77,14 +77,19 @@
 })();
 
 (() => {
-  const gallery = document.querySelector('.selected-projects__gallery');
-  if (!gallery) return;
+  const viewport = document.querySelector('.selected-projects__viewport');
+  if (!viewport) return;
 
-  const track = gallery.querySelector('.selected-projects__track');
-  const slides = [...gallery.querySelectorAll('.selected-projects__slide')];
-  const indicators = [...document.querySelectorAll('.selected-projects__indicator span')];
+  const track = viewport.querySelector('.selected-projects__projects-track');
+  const projects = [...viewport.querySelectorAll('.selected-projects__project')];
+  const indicators = [...viewport.querySelectorAll('[data-project-go-to]')];
   const dragThreshold = 0.14;
+  const autoplayDelay = 6500;
+  const loopClone = projects[0].cloneNode(true);
   let current = 0;
+  let autoplayTimer;
+  let loopFallback;
+  let wrapping = false;
   let pointerId = null;
   let startX = 0;
   let startY = 0;
@@ -92,26 +97,91 @@
   let axis = null;
   let dragging = false;
 
-  function getSlideStride() {
-    const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
-    return gallery.clientWidth + gap;
-  }
+  loopClone.classList.remove('is-active');
+  loopClone.removeAttribute('data-project-index');
+  loopClone.setAttribute('data-project-loop-clone', '');
+  loopClone.setAttribute('aria-hidden', 'true');
+  loopClone.setAttribute('inert', '');
+  track.append(loopClone);
 
   function render() {
-    track.style.transform = `translate3d(${-current * getSlideStride()}px, 0, 0)`;
-    gallery.setAttribute('aria-label', `Ramada Almaty project details, page ${current + 1} of ${slides.length}`);
+    const trackPosition = wrapping ? projects.length : current;
+    track.style.transform = `translate3d(${-trackPosition * viewport.clientWidth}px, 0, 0)`;
+    const projectName = projects[current].querySelector('.selected-projects__summary h3').textContent;
+    viewport.setAttribute('aria-label', `Selected projects, ${projectName}, project ${current + 1} of ${projects.length}`);
 
-    slides.forEach((slide, index) => {
-      slide.setAttribute('aria-hidden', String(index !== current));
+    projects.forEach((project, index) => {
+      const active = !wrapping && index === current;
+      project.style.removeProperty('opacity');
+      project.classList.toggle('is-active', active);
+      project.setAttribute('aria-hidden', String(!active));
     });
+
+    loopClone.classList.toggle('is-active', wrapping);
+    loopClone.setAttribute('aria-hidden', String(!wrapping));
 
     indicators.forEach((indicator, index) => {
-      indicator.classList.toggle('is-active', index === current);
+      const active = index === current;
+      indicator.classList.toggle('is-active', active);
+      indicator.setAttribute('aria-selected', String(active));
     });
+  }
+
+  function showProject(index) {
+    if (wrapping) finishLoop();
+    current = Math.max(0, Math.min(index, projects.length - 1));
+    render();
+  }
+
+  function finishLoop() {
+    if (!wrapping) return;
+
+    window.clearTimeout(loopFallback);
+    wrapping = false;
+
+    const firstProject = projects[0];
+    track.style.transition = 'none';
+    firstProject.style.transition = 'none';
+    loopClone.style.transition = 'none';
+    track.style.transform = 'translate3d(0, 0, 0)';
+    loopClone.classList.remove('is-active');
+    loopClone.setAttribute('aria-hidden', 'true');
+    firstProject.classList.add('is-active');
+    firstProject.setAttribute('aria-hidden', 'false');
+    track.getBoundingClientRect();
+    track.style.removeProperty('transition');
+    firstProject.style.removeProperty('transition');
+    loopClone.style.removeProperty('transition');
+  }
+
+  function advanceAutoplay() {
+    if (current === projects.length - 1) {
+      current = 0;
+      wrapping = true;
+      render();
+      loopFallback = window.setTimeout(finishLoop, 760);
+      return;
+    }
+
+    showProject(current + 1);
+  }
+
+  function restartAutoplay() {
+    window.clearTimeout(autoplayTimer);
+    if (document.hidden || projects.length < 2) return;
+
+    autoplayTimer = window.setTimeout(() => {
+      advanceAutoplay();
+      restartAutoplay();
+    }, autoplayDelay);
   }
 
   function beginDrag(event) {
     if (!event.isPrimary || event.button !== 0) return;
+
+    restartAutoplay();
+    if (event.target.closest('.selected-projects__indicator, .project-pair__nav')) return;
+    if (wrapping) finishLoop();
 
     dragging = true;
     pointerId = event.pointerId;
@@ -119,8 +189,8 @@
     startY = event.clientY;
     deltaX = 0;
     axis = null;
-    gallery.classList.add('is-dragging');
-    gallery.setPointerCapture(pointerId);
+    viewport.classList.add('is-dragging');
+    viewport.setPointerCapture(pointerId);
   }
 
   function moveDrag(event) {
@@ -138,26 +208,30 @@
     event.preventDefault();
     deltaX = movementX;
 
-    if ((current === 0 && deltaX > 0) || (current === slides.length - 1 && deltaX < 0)) {
+    if ((current === 0 && deltaX > 0) || (current === projects.length - 1 && deltaX < 0)) {
       deltaX *= .24;
     }
 
-    track.style.transform = `translate3d(${-current * getSlideStride() + deltaX}px, 0, 0)`;
+    const progress = Math.min(Math.abs(deltaX) / viewport.clientWidth, 1);
+    const nextIndex = current + (deltaX < 0 ? 1 : -1);
+    projects[current].style.opacity = String(1 - progress * .82);
+    if (projects[nextIndex]) projects[nextIndex].style.opacity = String(.18 + progress * .82);
+    track.style.transform = `translate3d(${-current * viewport.clientWidth + deltaX}px, 0, 0)`;
   }
 
   function endDrag(event, cancelled = false) {
     if (!dragging || event.pointerId !== pointerId) return;
 
     dragging = false;
-    gallery.classList.remove('is-dragging');
+    viewport.classList.remove('is-dragging');
 
-    if (gallery.hasPointerCapture(pointerId)) {
-      gallery.releasePointerCapture(pointerId);
+    if (viewport.hasPointerCapture(pointerId)) {
+      viewport.releasePointerCapture(pointerId);
     }
 
     if (!cancelled && axis === 'x') {
-      const threshold = gallery.clientWidth * dragThreshold;
-      if (deltaX < -threshold && current < slides.length - 1) current += 1;
+      const threshold = viewport.clientWidth * dragThreshold;
+      if (deltaX < -threshold && current < projects.length - 1) current += 1;
       if (deltaX > threshold && current > 0) current -= 1;
     }
 
@@ -165,26 +239,86 @@
     deltaX = 0;
     axis = null;
     render();
+    restartAutoplay();
   }
 
-  gallery.addEventListener('pointerdown', beginDrag);
-  gallery.addEventListener('pointermove', moveDrag);
-  gallery.addEventListener('pointerup', (event) => endDrag(event));
-  gallery.addEventListener('pointercancel', (event) => endDrag(event, true));
+  viewport.addEventListener('pointerdown', beginDrag);
+  viewport.addEventListener('pointermove', moveDrag);
+  viewport.addEventListener('pointerup', (event) => endDrag(event));
+  viewport.addEventListener('pointercancel', (event) => endDrag(event, true));
+  track.addEventListener('transitionend', (event) => {
+    if (event.target === track && event.propertyName === 'transform') finishLoop();
+  });
   window.addEventListener('resize', render);
-  gallery.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowRight' && current < slides.length - 1) {
+  viewport.addEventListener('keydown', (event) => {
+    if (event.target.closest('.project-pair__nav')) return;
+
+    if (event.key === 'ArrowRight' && current < projects.length - 1) {
       event.preventDefault();
-      current += 1;
-      render();
+      showProject(current + 1);
+      restartAutoplay();
     }
 
     if (event.key === 'ArrowLeft' && current > 0) {
       event.preventDefault();
-      current -= 1;
-      render();
+      showProject(current - 1);
+      restartAutoplay();
     }
   });
 
+  viewport.addEventListener('click', (event) => {
+    if (event.target.closest('.project-pair__nav')) restartAutoplay();
+  });
+
+  indicators.forEach((indicator) => {
+    indicator.addEventListener('click', () => {
+      showProject(Number(indicator.dataset.projectGoTo));
+      restartAutoplay();
+    });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) window.clearTimeout(autoplayTimer);
+    else restartAutoplay();
+  });
+
   render();
+  restartAutoplay();
+})();
+
+(() => {
+  const carousels = [...document.querySelectorAll('[data-project-pair-carousel]')];
+
+  carousels.forEach((carousel) => {
+    const track = carousel.querySelector('.project-pair__track');
+    const pages = [...carousel.querySelectorAll('.project-pair__page')];
+    const previous = carousel.querySelector('.project-pair__nav--previous');
+    const next = carousel.querySelector('.project-pair__nav--next');
+    let current = 0;
+
+    function render() {
+      track.style.transform = `translate3d(${-current * 100}%, 0, 0)`;
+
+      pages.forEach((page, index) => {
+        const active = index === current;
+        page.classList.toggle('is-active', active);
+        page.setAttribute('aria-hidden', String(!active));
+      });
+
+      previous.disabled = current === 0;
+      next.disabled = current === pages.length - 1;
+    }
+
+    previous.addEventListener('click', () => {
+      current = Math.max(0, current - 1);
+      render();
+    });
+
+    next.addEventListener('click', () => {
+      current = Math.min(pages.length - 1, current + 1);
+      render();
+    });
+
+    render();
+  });
 })();
