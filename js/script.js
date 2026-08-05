@@ -49,6 +49,34 @@
 })();
 
 (() => {
+  const items = [...document.querySelectorAll('.expertise-item')];
+  if (!items.length) return;
+
+  items.forEach((item) => {
+    const trigger = item.querySelector('.expertise-item__trigger');
+    const panel = item.querySelector('.expertise-item__panel');
+
+    trigger.addEventListener('click', () => {
+      const willOpen = trigger.getAttribute('aria-expanded') !== 'true';
+
+      items.forEach((otherItem) => {
+        const otherTrigger = otherItem.querySelector('.expertise-item__trigger');
+        const otherPanel = otherItem.querySelector('.expertise-item__panel');
+        otherItem.classList.remove('is-open');
+        otherTrigger.setAttribute('aria-expanded', 'false');
+        otherPanel.setAttribute('aria-hidden', 'true');
+      });
+
+      if (willOpen) {
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+})();
+
+(() => {
   const gallery = document.querySelector('.selected-projects__gallery');
   if (!gallery) return;
 
