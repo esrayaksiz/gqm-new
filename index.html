@@ -86,7 +86,7 @@
               End-to-end hotel management and consultancy solutions designed to
               strengthen performance, guest experience and long-term value.
             </p>
-            <a class="service-row__link" href="/hospitality-management">Explore</a>
+            <a class="service-row__link" href="#hotel-management-panel" aria-controls="hotel-management-panel">Explore</a>
           </div>
         </article>
 
@@ -479,6 +479,13 @@
       </section>
     </main>
 
+    <aside class="real-estate-reveal" id="hotel-management-panel" aria-hidden="true" aria-label="Hotel Management details">
+      <div class="real-estate-reveal__surface">
+        <button class="real-estate-reveal__close" type="button" aria-label="Close Hotel Management details"><span aria-hidden="true"></span></button>
+        <iframe class="real-estate-reveal__frame" title="Hotel Management and Consultancy details" data-src="hotel-management.html"></iframe>
+      </div>
+    </aside>
+
     <aside class="real-estate-reveal" id="real-estate-panel" aria-hidden="true" aria-label="Real Estate Development details">
       <div class="real-estate-reveal__surface">
         <button class="real-estate-reveal__close" type="button" aria-label="Close Real Estate Development details"><span aria-hidden="true"></span></button>
@@ -486,6 +493,6 @@
       </div>
     </aside>
 
-    <script src="js/script.js?v=20260805-4" defer></script>
+    <script src="js/script.js?v=20260805-5" defer></script>
   </body>
 </html>

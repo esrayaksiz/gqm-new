@@ -1,0 +1,111 @@
+.hotel-detail {
+  width: min(1480px, 100%);
+  margin: 0 auto;
+  padding: clamp(46px, 4.8vw, 78px) clamp(26px, 3.7vw, 58px) clamp(72px, 7vw, 112px);
+}
+
+.hotel-advisory .development-area__header { max-width: 760px; }
+.hotel-advisory .development-area__header h1 { font-size: clamp(29px, 2.7vw, 43px); text-transform: none; }
+
+.detail-item__panel ul {
+  margin: 0;
+  padding: 0 46px 25px 24px;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.preopening {
+  padding: clamp(72px, 7vw, 112px) 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.preopening__header { text-align: center; }
+.preopening__header h2 {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: clamp(34px, 3.5vw, 54px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.preopening__header p {
+  width: min(620px, 100%);
+  margin: 28px auto 0;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.preopening__carousel {
+  width: min(900px, 100%);
+  margin: clamp(48px, 5vw, 76px) auto 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.preopening__track { display: flex; transition: transform .75s cubic-bezier(.22, 1, .36, 1); }
+.preopening__slide {
+  min-width: 100%;
+  min-height: clamp(360px, 39vw, 520px);
+  padding: clamp(58px, 8vw, 118px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.preopening__slide span {
+  font-family: Inter, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.preopening__slide h3 {
+  max-width: 650px;
+  margin: 20px 0 0;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: clamp(27px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.preopening__slide p {
+  margin: 20px 0 0;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.preopening__pagination { padding: 0 24px 24px; display: flex; justify-content: center; gap: 6px; }
+.preopening__pagination button {
+  width: min(54px, 8vw);
+  height: 18px;
+  padding: 8px 0;
+  border: 0;
+  background: linear-gradient(#bbb8b0, #bbb8b0) center / 100% 1px no-repeat;
+  cursor: pointer;
+}
+
+.preopening__pagination button.is-active { background-image: linear-gradient(#161512, #161512); }
+.preopening__pagination button:focus-visible { outline: 1px solid #161512; outline-offset: 2px; }
+
+@media (max-width: 760px) {
+  .hotel-detail { padding: 38px 24px 68px; }
+  .hotel-advisory .development-area__header h1 { font-size: 32px; }
+  .detail-item__panel ul { padding: 0 34px 22px 20px; font-size: 13px; }
+  .preopening { padding-top: 58px; }
+  .preopening__header h2 { font-size: 36px; }
+  .preopening__header p { margin-top: 22px; font-size: 13px; }
+  .preopening__carousel { margin-top: 40px; }
+  .preopening__slide { min-height: 390px; padding: 48px 28px; }
+  .preopening__slide h3 { font-size: 28px; }
+  .preopening__pagination { padding-right: 12px; padding-left: 12px; gap: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preopening__track { transition: none; }
+}

@@ -49,43 +49,52 @@
 })();
 
 (() => {
-  const trigger = document.querySelector('[aria-controls="real-estate-panel"]');
-  const panel = document.querySelector('#real-estate-panel');
-  if (!trigger || !panel) return;
-
-  const closeButton = panel.querySelector('.real-estate-reveal__close');
-  const frame = panel.querySelector('.real-estate-reveal__frame');
+  const triggers = [...document.querySelectorAll('[aria-controls$="-panel"]')];
+  let activePanel = null;
+  let activeTrigger = null;
   let focusTimer;
 
-  function openPanel(event) {
-    event.preventDefault();
-    if (!frame.src) frame.src = frame.dataset.src;
-    panel.setAttribute('aria-hidden', 'false');
-    trigger.setAttribute('aria-expanded', 'true');
-
-    window.requestAnimationFrame(() => {
-      panel.classList.add('is-open');
-      document.body.classList.add('real-estate-panel-open');
-    });
-
-    window.clearTimeout(focusTimer);
-    focusTimer = window.setTimeout(() => closeButton.focus(), 900);
-  }
-
   function closePanel() {
+    if (!activePanel || !activeTrigger) return;
+    const panel = activePanel;
+    const trigger = activeTrigger;
     window.clearTimeout(focusTimer);
     panel.classList.remove('is-open');
     document.body.classList.remove('real-estate-panel-open');
     trigger.setAttribute('aria-expanded', 'false');
     window.setTimeout(() => panel.setAttribute('aria-hidden', 'true'), 900);
+    activePanel = null;
+    activeTrigger = null;
     trigger.focus();
   }
 
-  trigger.setAttribute('aria-expanded', 'false');
-  trigger.addEventListener('click', openPanel);
-  closeButton.addEventListener('click', closePanel);
+  triggers.forEach((trigger) => {
+    const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+    if (!panel) return;
+    const closeButton = panel.querySelector('.real-estate-reveal__close');
+    const frame = panel.querySelector('.real-estate-reveal__frame');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (!frame.src) frame.src = frame.dataset.src;
+      activePanel = panel;
+      activeTrigger = trigger;
+      panel.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+      window.requestAnimationFrame(() => {
+        panel.classList.add('is-open');
+        document.body.classList.add('real-estate-panel-open');
+      });
+      window.clearTimeout(focusTimer);
+      focusTimer = window.setTimeout(() => closeButton.focus(), 900);
+    });
+
+    closeButton.addEventListener('click', closePanel);
+  });
+
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && panel.classList.contains('is-open')) closePanel();
+    if (event.key === 'Escape' && activePanel) closePanel();
   });
 })();
 
