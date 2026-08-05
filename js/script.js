@@ -49,18 +49,43 @@
 })();
 
 (() => {
-  const items = [...document.querySelectorAll('.real-estate-inline__item')];
+  const trigger = document.querySelector('[aria-controls="real-estate-panel"]');
+  const panel = document.querySelector('#real-estate-panel');
+  if (!trigger || !panel) return;
 
-  items.forEach((item) => {
-    const trigger = item.querySelector('button');
-    const panel = item.querySelector('.real-estate-inline__panel');
+  const closeButton = panel.querySelector('.real-estate-reveal__close');
+  const frame = panel.querySelector('.real-estate-reveal__frame');
+  let focusTimer;
 
-    trigger.addEventListener('click', () => {
-      const willOpen = trigger.getAttribute('aria-expanded') !== 'true';
-      item.classList.toggle('is-open', willOpen);
-      trigger.setAttribute('aria-expanded', String(willOpen));
-      panel.setAttribute('aria-hidden', String(!willOpen));
+  function openPanel(event) {
+    event.preventDefault();
+    if (!frame.src) frame.src = frame.dataset.src;
+    panel.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+
+    window.requestAnimationFrame(() => {
+      panel.classList.add('is-open');
+      document.body.classList.add('real-estate-panel-open');
     });
+
+    window.clearTimeout(focusTimer);
+    focusTimer = window.setTimeout(() => closeButton.focus(), 900);
+  }
+
+  function closePanel() {
+    window.clearTimeout(focusTimer);
+    panel.classList.remove('is-open');
+    document.body.classList.remove('real-estate-panel-open');
+    trigger.setAttribute('aria-expanded', 'false');
+    window.setTimeout(() => panel.setAttribute('aria-hidden', 'true'), 900);
+    trigger.focus();
+  }
+
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.addEventListener('click', openPanel);
+  closeButton.addEventListener('click', closePanel);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && panel.classList.contains('is-open')) closePanel();
   });
 })();
 
