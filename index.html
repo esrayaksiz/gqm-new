@@ -8,10 +8,65 @@
     <link rel="preload" as="image" href="gqm-images/hero/hero3-1.png?v=20260805-2" fetchpriority="high">
     <link rel="preload" as="image" href="gqm-images/hero/hero1.webp?v=20260805-2">
     <link rel="preload" as="image" href="gqm-images/hero/hero2.png?v=20260805-2">
+    <link rel="prefetch" href="hotel-management.html">
+    <link rel="prefetch" href="real-estate-development.html">
+    <link rel="prefetch" href="software-digital-solutions.html">
     <link rel="stylesheet" href="https://use.typekit.net/cae3aad.css">
-    <link rel="stylesheet" href="css/style.css?v=20260805-4">
+    <link rel="stylesheet" href="css/style.css?v=20260806-8">
   </head>
   <body>
+    <aside class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="site-menu-title">
+      <div class="site-menu__surface">
+        <button class="site-menu__close" type="button" aria-label="Close menu">
+          <span class="site-menu__close-icon" aria-hidden="true"></span>
+          <span>Menu</span>
+        </button>
+
+        <div class="site-menu__layout">
+          <div class="site-menu__services" aria-label="Services">
+            <a class="site-menu__service" href="#hotel-management-panel" data-menu-panel="hotel-management-panel">
+              <img src="assets/images/hotel-management.webp" alt="Luxury coastal hotel and swimming pool">
+              <span>Hospitality Management &amp; Consultancy</span>
+            </a>
+            <a class="site-menu__service" href="#real-estate-panel" data-menu-panel="real-estate-panel">
+              <img src="assets/images/real-estate-development.webp" alt="Contemporary residential development">
+              <span>Real Estate Development &amp; Consultancy</span>
+            </a>
+            <a class="site-menu__service" href="#software-panel" data-menu-panel="software-panel">
+              <img src="assets/images/software.webp" alt="Digital exhibition and public infrastructure installation">
+              <span>Software &amp; Digital Solutions</span>
+            </a>
+          </div>
+
+          <div class="site-menu__navigation">
+            <h2 id="site-menu-title">Navigation</h2>
+            <nav aria-label="Main navigation">
+              <a href="#hotel-management-panel" data-menu-panel="hotel-management-panel">Hospitality Management &amp; Consultancy</a>
+              <a href="#real-estate-panel" data-menu-panel="real-estate-panel">Real Estate Development &amp; Consultancy</a>
+              <a href="#software-panel" data-menu-panel="software-panel">Software &amp; Digital Solutions</a>
+              <a href="#selected-projects-title">Selected Projects</a>
+              <a href="#expertise-title">Our Expertise</a>
+              <a href="#team">Our Leadership</a>
+              <a href="#contact">Enquire</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <header class="sticky-navbar" aria-label="Sticky navigation" aria-hidden="true" inert>
+      <button class="sticky-navbar__menu" type="button" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false">
+        <span class="sticky-navbar__menu-icon" aria-hidden="true"><i></i><i></i></span>
+        <span>Menu</span>
+      </button>
+
+      <a class="sticky-navbar__brand" href="#" aria-label="GQ Management International home">
+        <img src="gqm-images/gqm-logo-transparent.png" alt="">
+      </a>
+
+      <a class="sticky-navbar__enquire" href="#contact">Enquire</a>
+    </header>
+
     <main>
       <section class="hero" aria-label="GQ Management introduction">
         <div class="hero__slides">
@@ -27,7 +82,7 @@
         </div>
 
         <header class="hero__header">
-          <button class="menu-button" type="button" aria-label="Open menu">
+          <button class="menu-button" type="button" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false">
             <span class="menu-button__icon" aria-hidden="true"><i></i><i></i></span>
             <span>Menu</span>
           </button>
@@ -481,12 +536,13 @@
       <section class="team-section" id="team" aria-labelledby="team-title">
         <div class="team-section__sticky">
           <header class="team-section__header">
-            <p class="team-section__eyebrow">Our Team</p>
+            <p class="team-section__eyebrow">Our Leadership</p>
             <h2 id="team-title">The People Behind GQM Management</h2>
             <p class="team-section__intro">A leadership team shaped by international hospitality expertise, strategic insight and a shared commitment to lasting value.</p>
           </header>
 
-          <div class="team-section__grid">
+          <div class="team-carousel__viewport" role="region" aria-label="Team members carousel" tabindex="0">
+            <div class="team-section__grid">
             <article class="team-member">
               <img src="assets/images/team-cem-ciritci.png" alt="Cem Ciritci" loading="lazy">
               <div class="team-member__details">
@@ -566,6 +622,17 @@
                 <p>General Manager</p>
               </div>
             </article>
+            </div>
+          </div>
+
+          <div class="team-carousel__controls" aria-label="Team carousel controls">
+            <button class="team-carousel__arrow team-carousel__arrow--previous" type="button" aria-label="Previous team member">
+              <span aria-hidden="true">&#8249;</span>
+            </button>
+            <div class="team-carousel__pagination" aria-label="Choose a team member"></div>
+            <button class="team-carousel__arrow team-carousel__arrow--next" type="button" aria-label="Next team member">
+              <span aria-hidden="true">&#8250;</span>
+            </button>
           </div>
         </div>
       </section>
@@ -640,6 +707,6 @@
       </div>
     </aside>
 
-    <script src="js/script.js?v=20260805-5" defer></script>
+    <script src="js/script.js?v=20260806-7" defer></script>
   </body>
 </html>
