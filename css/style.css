@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Inter:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Inter:wght@400&display=swap');
 
 :root {
   --white: #fff;
@@ -12,7 +12,8 @@ html, body { margin: 0; min-height: 100%; }
 body {
   background: #111;
   color: var(--white);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -75,7 +76,7 @@ button, a { font: inherit; }
   text-decoration: none;
   text-transform: uppercase;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: .065em;
   opacity: 1;
   text-shadow: 0 1px 4px rgba(0,0,0,.18);
@@ -89,6 +90,7 @@ button, a { font: inherit; }
 .menu-button__icon i { display: block; height: 1px; background: #fff; opacity: 1; }
 
 .sticky-navbar {
+  --sticky-control-height: clamp(46px, 2.85vw, 54px);
   position: fixed;
   z-index: 150;
   top: 0;
@@ -131,13 +133,13 @@ body.real-estate-panel-open .sticky-navbar {
 .sticky-navbar__menu,
 .sticky-navbar__enquire {
   width: clamp(122px, 7.4vw, 142px);
-  height: clamp(46px, 2.85vw, 54px);
+  height: var(--sticky-control-height);
   border: 1px solid #171717;
   background: transparent;
   color: #171717;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
   font-size: clamp(16px, 1.05vw, 20px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: .035em;
   text-decoration: none;
@@ -188,24 +190,30 @@ body.real-estate-panel-open .sticky-navbar {
 }
 
 .sticky-navbar__brand {
-  width: clamp(96px, 6.8vw, 130px);
-  height: clamp(70px, 6.1vw, 116px);
-  display: grid;
-  place-items: center;
+  position: relative;
+  width: clamp(161px, 11vw, 212px);
+  height: clamp(68px, 4.25vw, 81px);
+  align-self: center;
   justify-self: center;
   overflow: hidden;
 }
 
 .sticky-navbar__brand img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: -27%;
+  left: 50%;
+  width: auto;
+  height: 162%;
+  max-width: none;
   display: block;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(66%) sepia(54%) saturate(669%) hue-rotate(359deg) brightness(88%) contrast(87%);
+  transform: translateX(-50%);
+  filter: none;
 }
 
 @media (max-width: 700px) {
   .sticky-navbar {
+    --sticky-control-height: 38px;
     height: 66px;
     padding-inline: 10px;
   }
@@ -213,27 +221,30 @@ body.real-estate-panel-open .sticky-navbar {
   .sticky-navbar__menu,
   .sticky-navbar__enquire {
     width: 100px;
-    height: 38px;
+    height: var(--sticky-control-height);
     font-size: 13px;
   }
 
   .sticky-navbar__menu { padding-inline: 10px; }
   .sticky-navbar__menu-icon { width: 20px; gap: 5px; }
-  .sticky-navbar__brand { width: 76px; height: 58px; }
+  .sticky-navbar__brand { width: 149px; height: 56px; }
 }
 
 @media (max-width: 430px) {
-  .sticky-navbar { height: 62px; }
+  .sticky-navbar {
+    --sticky-control-height: 36px;
+    height: 62px;
+  }
 
   .sticky-navbar__menu,
   .sticky-navbar__enquire {
     width: 86px;
-    height: 36px;
+    height: var(--sticky-control-height);
     font-size: 11px;
   }
 
   .sticky-navbar__menu-icon { width: 17px; }
-  .sticky-navbar__brand { width: 68px; height: 54px; }
+  .sticky-navbar__brand { width: 128px; height: 54px; }
 }
 
 body.site-menu-open { overflow: hidden; }
@@ -244,8 +255,8 @@ body.site-menu-open { overflow: hidden; }
   top: 0;
   right: 0;
   left: 0;
-  height: 54vh;
-  height: 54svh;
+  height: 60vh;
+  height: 60svh;
   overflow-y: auto;
   background: #ffffff;
   color: #181818;
@@ -288,9 +299,9 @@ body.site-menu-open { overflow: hidden; }
   border: 1px solid #202020;
   background: transparent;
   color: #181818;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: .015em;
   text-transform: uppercase;
@@ -326,9 +337,9 @@ body.site-menu-open { overflow: hidden; }
   height: auto;
   padding-top: clamp(14px, 2vh, 22px);
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(260px, .92fr);
+  grid-template-columns: minmax(0, min(55vw, 1050px)) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(64px, 5.2vw, 100px);
+  gap: 92px;
   opacity: 0;
   transform: translate3d(0, -14px, 0);
   transition: opacity 520ms ease, transform 700ms cubic-bezier(.22, 1, .36, 1);
@@ -340,6 +351,7 @@ body.site-menu-open { overflow: hidden; }
 }
 
 .site-menu__services {
+  width: min(100%, clamp(690px, 55vw, 1050px));
   min-width: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -355,7 +367,9 @@ body.site-menu-open { overflow: hidden; }
 
 .site-menu__service img {
   width: 100%;
-  height: clamp(180px, 34svh, 340px);
+  height: auto;
+  max-height: none;
+  aspect-ratio: 4 / 5;
   display: block;
   object-fit: cover;
 }
@@ -365,37 +379,44 @@ body.site-menu-open { overflow: hidden; }
   padding: 12px 2px 0;
   display: block;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-size: clamp(14px, .92vw, 18px);
-  font-weight: 300;
-  line-height: 1.4;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
   text-align: left;
 }
 
 .site-menu__navigation {
-  align-self: center;
-  padding-left: clamp(0px, 1.2vw, 22px);
+  height: calc((min(55vw, 1050px) - (2 * clamp(10px, .65vw, 14px))) * 5 / 12);
+  align-self: start;
+  padding-left: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 .site-menu__navigation h2 {
   margin: 0 0 clamp(30px, 6vh, 58px);
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-size: clamp(23px, 1.45vw, 28px);
-  font-weight: 300;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
   line-height: 1;
 }
 
 .site-menu__navigation nav {
   display: grid;
+  align-content: space-between;
+  justify-items: start;
   gap: clamp(12px, 1.8vh, 19px);
+  text-align: left;
 }
 
 .site-menu__navigation a {
   width: fit-content;
   color: #181818;
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: clamp(17px, 1.05vw, 21px);
-  font-weight: 500;
-  line-height: 1.15;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
   text-decoration: none;
 }
 
@@ -415,10 +436,16 @@ body.site-menu-open { overflow: hidden; }
     gap: 52px;
   }
 
-  .site-menu__service img { height: clamp(280px, 40vw, 420px); }
+  .site-menu__service img {
+    height: auto;
+    max-height: none;
+    aspect-ratio: 4 / 5;
+  }
 
   .site-menu__navigation {
+    height: auto;
     padding: 38px 0 24px;
+    display: block;
     border-top: 1px solid #d2d2cf;
   }
 
@@ -431,7 +458,17 @@ body.site-menu-open { overflow: hidden; }
 }
 
 @media (max-width: 700px) {
-  .site-menu__surface { padding: 22px 18px 44px; }
+  .site-menu {
+    height: 100vh;
+    height: 100svh;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .site-menu__surface {
+    height: auto;
+    padding: 18px 18px 28px;
+  }
 
   .site-menu__close {
     width: 132px;
@@ -454,44 +491,53 @@ body.site-menu-open { overflow: hidden; }
 
   .site-menu__layout {
     min-height: 0;
-    padding-top: 38px;
-    gap: 46px;
+    padding-top: 24px;
+    gap: 24px;
   }
 
   .site-menu__services {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 14px;
+  }
+
+  .site-menu__service {
+    display: grid;
+    grid-template-columns: clamp(72px, 21vw, 88px) minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
   }
 
   .site-menu__service img {
+    width: 100%;
     height: auto;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 5;
   }
 
   .site-menu__service span {
     min-height: 0;
-    padding-top: 10px;
-    font-size: 15px;
+    padding: 0;
+    font-size: 14px;
   }
 
-  .site-menu__navigation { padding-top: 34px; }
-  .site-menu__navigation h2 { margin-bottom: 34px; }
+  .site-menu__navigation { padding: 22px 0 10px; }
+  .site-menu__navigation h2 { margin-bottom: 22px; }
 
   .site-menu__navigation nav {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 12px;
   }
 
-  .site-menu__navigation a { font-size: 19px; }
+  .site-menu__navigation a { font-size: 16px; }
 }
 
 .brand {
   display: grid;
-  place-items: start center;
+  place-items: center;
   justify-self: center;
   width: 194px;
   height: 100px;
-  overflow: hidden;
+  margin-top: -26px;
+  overflow: visible;
   color: var(--white);
   text-decoration: none;
   position: relative;
@@ -499,16 +545,57 @@ body.site-menu-open { overflow: hidden; }
   opacity: 1;
   transform: scale(1);
   transform-origin: center center;
+  backface-visibility: hidden;
   animation: navbar-logo-intro 1s cubic-bezier(.22, 1, .36, 1) both;
 }
 
 .brand__logo {
-  width: 174px;
-  height: 174px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 156px;
+  height: 156px;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
-  transform: translateY(-32px);
-  opacity: 1;
-  filter: brightness(1.12) contrast(1.12);
+  transform: translate3d(-50%, -50%, 0) !important;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  image-rendering: auto;
+  opacity: 1 !important;
+  transition: none !important;
+  filter: none;
+}
+
+.brand.is-scroll-animated {
+  animation: none;
+  opacity: var(--hero-logo-opacity, 1);
+  transform: translate3d(
+      var(--hero-logo-translate-x, 0),
+      var(--hero-logo-translate-y, 0),
+      0
+    )
+    scale(var(--hero-logo-scale, 1));
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: opacity 520ms cubic-bezier(.22, 1, .36, 1);
+  will-change: transform, opacity;
+}
+
+.brand.is-scroll-animated.is-logo-settled {
+  transform: none;
+  will-change: auto;
+}
+
+.brand.is-logo-hidden {
+  --hero-logo-opacity: 0;
+  pointer-events: none;
+}
+
+.brand.is-scroll-measuring {
+  animation: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 @keyframes navbar-logo-intro {
@@ -537,9 +624,54 @@ body.site-menu-open { overflow: hidden; }
 
 .hero__copy-item.is-active { opacity: 1; transform: translateY(0); }
 
+.hero--intro-pending .menu-button,
+.hero--intro-pending .enquire-button {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+
+.hero--intro-pending .hero__copy-item.is-active {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+.hero--intro-ready .menu-button,
+.hero--intro-ready .enquire-button,
+.hero--intro-ready .hero__copy-item.is-active {
+  will-change: opacity, transform;
+}
+
+.hero--intro-ready .menu-button {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-color .3s ease,
+    background-color .3s ease,
+    opacity 820ms cubic-bezier(.22, 1, .36, 1),
+    transform 940ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.hero--intro-ready .enquire-button {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-color .3s ease,
+    background-color .3s ease,
+    opacity 820ms cubic-bezier(.22, 1, .36, 1) 70ms,
+    transform 940ms cubic-bezier(.22, 1, .36, 1) 70ms;
+}
+
+.hero--intro-ready .hero__copy-item.is-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 880ms cubic-bezier(.22, 1, .36, 1) 110ms,
+    transform 1000ms cubic-bezier(.22, 1, .36, 1) 110ms;
+}
+
 .hero__copy h1,
 .hero__copy h2,
-.hero__copy p { margin: 0; color: var(--white); font-weight: 300; }
+.hero__copy p { margin: 0; color: var(--white); font-weight: 400; }
 
 .hero__copy h1,
 .hero__copy h2 {
@@ -618,9 +750,9 @@ body.site-menu-open { overflow: hidden; }
   max-width: 920px;
   margin: clamp(38px, 2.3vw, 44px) 0 0;
   color: #111111;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0;
 }
@@ -635,9 +767,9 @@ body.site-menu-open { overflow: hidden; }
   justify-content: center;
   border: 1px solid #242424;
   color: inherit;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: .02em;
   text-decoration: none;
@@ -720,7 +852,7 @@ body.site-menu-open { overflow: hidden; }
   color: #111111;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -734,9 +866,9 @@ body.site-menu-open { overflow: hidden; }
   justify-content: center;
   border: 1px solid #242424;
   color: #242424;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: .02em;
   text-decoration: none;
@@ -817,11 +949,13 @@ body.real-estate-panel-open > main {
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid rgba(22, 21, 18, .45);
-  border-radius: 50%;
-  background: rgba(238, 233, 223, .88);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: #161512;
   cursor: pointer;
+  opacity: .82;
+  transition: color .28s ease, opacity .28s ease;
 }
 
 .real-estate-reveal__close::before,
@@ -830,13 +964,14 @@ body.real-estate-panel-open > main {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 17px;
+  width: 19px;
   height: 1px;
   background: currentColor;
 }
 
 .real-estate-reveal__close::before { transform: translate(-50%, -50%) rotate(45deg); }
 .real-estate-reveal__close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.real-estate-reveal__close:hover { opacity: .55; }
 .real-estate-reveal__close:focus-visible { outline: 1px solid #161512; outline-offset: 4px; }
 
 .expertise-accordion {
@@ -855,9 +990,9 @@ body.real-estate-panel-open > main {
 
 .expertise-accordion__eyebrow {
   margin: 0 0 32px;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
@@ -876,7 +1011,7 @@ body.real-estate-panel-open > main {
   margin: clamp(50px, 4vw, 68px) 0 0;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.28;
 }
 
@@ -944,7 +1079,7 @@ body.real-estate-panel-open > main {
   color: #333;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.65;
 }
 
@@ -971,9 +1106,9 @@ body.real-estate-panel-open > main {
 .selected-projects__eyebrow {
   margin: 0 0 18px;
   color: #111111;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
@@ -994,7 +1129,7 @@ body.real-estate-panel-open > main {
   color: #111111;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -1064,7 +1199,7 @@ body.real-estate-panel-open > main {
   color: #111111;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -1119,9 +1254,9 @@ body.real-estate-panel-open > main {
   box-shadow: 0 3px 14px rgba(17, 17, 17, .08);
   -webkit-backdrop-filter: blur(9px) saturate(108%);
   backdrop-filter: blur(9px) saturate(108%);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'forma-djr-micro', Arial, Helvetica, sans-serif;
   font-size: 30px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   cursor: pointer;
   transform: translateY(-50%);
@@ -1215,7 +1350,7 @@ body.real-estate-panel-open > main {
   color: #111111;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -1273,8 +1408,9 @@ body.real-estate-panel-open > main {
   .brand {
     width: 124px;
     height: 70px;
+    margin-top: -16px;
   }
-  .brand__logo { width: 116px; height: 116px; transform: translateY(-21px); }
+  .brand__logo { width: 110px; height: 110px; }
   .hero__copy { bottom: 88px; min-height: 110px; }
   .hero__copy h1, .hero__copy h2 { font-size: clamp(25px, 7vw, 34px); line-height: 1.16; }
   .hero__copy h1 br, .hero__copy h2 br { display: none; }
@@ -1319,7 +1455,7 @@ body.real-estate-panel-open > main {
   }
 
   .service-row__content h2 { font-size: clamp(38px, 7.5vw, 46px); }
-  .service-row__content p { max-width: 580px; margin-top: clamp(20px, 3vh, 31px); font-size: 15px; }
+  .service-row__content p { max-width: 580px; margin-top: clamp(20px, 3vh, 31px); font-size: 18px; }
 
   .service-row__link {
     min-width: 144px;
@@ -1392,8 +1528,8 @@ body.real-estate-panel-open > main {
   .menu-button, .enquire-button { width: 88px; height: 40px; font-size: 11px; }
   .menu-button { gap: 8px; }
   .menu-button__icon { width: 20px; }
-  .brand { width: 106px; height: 62px; }
-  .brand__logo { width: 102px; height: 102px; transform: translateY(-18px); }
+  .brand { width: 106px; height: 62px; margin-top: -16px; }
+  .brand__logo { width: 96px; height: 96px; }
 
   .beyond-management { min-height: 470px; padding-top: 70px; padding-bottom: 62px; }
   .beyond-management h2 { font-size: 36px; }
@@ -1403,13 +1539,13 @@ body.real-estate-panel-open > main {
   .service-row__visual { flex-basis: 40%; }
   .service-row__content { flex-basis: 60%; padding: clamp(24px, 4.5vh, 38px) 24px; }
   .service-row__content h2 { font-size: 36px; }
-  .service-row__content p { font-size: 14px; line-height: 1.55; }
+  .service-row__content p { font-size: 18px; line-height: 1.55; }
   .service-row__link { min-width: 132px; height: 52px; padding: 0 26px; font-size: 18px; }
 
   .selected-projects__header { min-height: 470px; padding-top: 70px; padding-bottom: 62px; }
-  .selected-projects__eyebrow { margin-bottom: 14px; font-size: 10px; }
+  .selected-projects__eyebrow { margin-bottom: 14px; font-size: 18px; }
   .selected-projects__header h2 { font-size: 36px; }
-  .expertise-accordion__eyebrow { font-size: 10px; }
+  .expertise-accordion__eyebrow { font-size: 18px; }
   .expertise-accordion__header h2 { font-size: 36px; }
   .selected-projects__description { font-size: 14px; line-height: 1.55; }
   .selected-projects__project { padding: 28px 24px 54px; }
@@ -1425,7 +1561,7 @@ body.real-estate-panel-open > main {
   .service-row__visual { flex-basis: 36%; }
   .service-row__content { flex-basis: 64%; padding-top: 18px; padding-bottom: 18px; }
   .service-row__content h2 { font-size: 32px; }
-  .service-row__content p { margin-top: 16px; font-size: 13px; line-height: 1.4; }
+  .service-row__content p { margin-top: 16px; font-size: 18px; line-height: 1.4; }
   .beyond-management__enquire,
   .service-row__link { min-width: 118px; height: 44px; margin-top: 18px; padding: 0 22px; font-size: 16px; }
 
@@ -1439,9 +1575,22 @@ body.real-estate-panel-open > main {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero--intro-pending .menu-button,
+  .hero--intro-pending .enquire-button,
+  .hero--intro-pending .hero__copy-item.is-active {
+    opacity: 1;
+    transform: none;
+  }
+
   .hero__slide, .hero__copy-item { transition-duration: .01ms; }
   .hero__slide.is-active .hero__image { animation: none; }
-  .brand { animation: none; }
+  .brand,
+  .brand.is-scroll-animated {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
   .menu-button, .enquire-button { transition: none; }
   body > main,
   .real-estate-reveal,
@@ -1473,9 +1622,9 @@ body.real-estate-panel-open > main {
 
 .team-section__eyebrow {
   margin: 0 0 18px;
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 11px;
-  font-weight: 300;
+  font-family: 'forma-djr-micro', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: .16em;
   text-transform: uppercase;
 }
@@ -1494,7 +1643,7 @@ body.real-estate-panel-open > main {
   margin: 26px auto 0;
   font-family: 'Inter', Arial, sans-serif;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.65;
   color: #111111;
 }
@@ -1528,10 +1677,10 @@ body.real-estate-panel-open > main {
 
 .team-member h3 {
   margin: 0;
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: clamp(25px, 2vw, 31px);
-  font-style: italic;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
   line-height: 1.1;
 }
 
@@ -1539,7 +1688,7 @@ body.real-estate-panel-open > main {
   margin: 9px auto 0;
   font-family: 'Inter', Arial, sans-serif;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.45;
   color: #111111;
 }
@@ -1573,9 +1722,9 @@ body.real-estate-panel-open > main {
 .contact-footer__brand p {
   max-width: 250px;
   margin: 24px 0 0;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'forma-djr-micro', Arial, sans-serif;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.65;
   color: #b8b7b2;
 }
@@ -1611,8 +1760,8 @@ body.real-estate-panel-open > main {
 .contact-office p,
 .contact-office a,
 .contact-footer__bottom {
-  font-family: 'Inter', Arial, sans-serif;
-  font-weight: 300;
+  font-family: 'forma-djr-micro', Arial, sans-serif;
+  font-weight: 400;
 }
 
 .contact-office p {
@@ -1705,7 +1854,7 @@ body.real-estate-panel-open > main {
   }
 
   .team-section__header { margin-bottom: 34px; }
-  .team-section__eyebrow { margin-bottom: 14px; font-size: 10px; }
+  .team-section__eyebrow { margin-bottom: 14px; font-size: 18px; }
   .team-section__header h2 { font-size: clamp(36px, 10vw, 43px); }
   .team-section__intro { margin-top: 20px; font-size: 14px; line-height: 1.55; }
 
@@ -1901,9 +2050,9 @@ body.real-estate-panel-open > main {
 
 .team-carousel__arrow span {
   margin-top: -2px;
-  font-family: Arial, sans-serif;
+  font-family: 'forma-djr-micro', Arial, sans-serif;
   font-size: 30px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
 }
 
@@ -1955,12 +2104,33 @@ body.real-estate-panel-open > main {
 
 @media (max-width: 700px) {
   .team-section {
-    --team-card-width: min(520px, calc(100vw - 96px));
-    --team-card-gap: 18px;
+    --team-card-width: clamp(240px, 67vw, 306px);
+    --team-card-gap: clamp(14px, 4vw, 22px);
   }
 
   .team-carousel__viewport {
     width: 100vw;
+  }
+
+  .team-carousel__viewport .team-member {
+    display: block;
+    grid-template-columns: none;
+    align-items: initial;
+    background: transparent;
+    text-align: left;
+  }
+
+  .team-carousel__viewport .team-member__details {
+    padding: 18px 4px 0;
+  }
+
+  .team-carousel__viewport .team-member h3 {
+    font-size: 25px;
+  }
+
+  .team-carousel__viewport .team-member p {
+    margin-top: 9px;
+    font-size: 13px;
   }
 
   .team-carousel__controls {
@@ -1985,12 +2155,16 @@ body.real-estate-panel-open > main {
 
 @media (max-width: 430px) {
   .team-section {
-    --team-card-width: calc(100vw - 88px);
+    --team-card-width: clamp(230px, 67vw, 288px);
     --team-card-gap: 14px;
   }
 
   .team-carousel__controls {
     width: calc(100vw - 28px);
+  }
+
+  .team-carousel__dot {
+    width: 14px;
   }
 }
 

@@ -16,9 +16,9 @@
 .hotel-detail__intro p {
   max-width: 610px;
   margin: 25px 0 0;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -27,9 +27,9 @@
 .detail-item__panel ul {
   margin: 0;
   padding: 0 46px 25px 24px;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.7;
 }
 
@@ -56,9 +56,9 @@
 .preopening__header p {
   width: min(620px, 100%);
   margin: 28px auto 0;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -96,9 +96,9 @@
 }
 
 .preopening__slide span {
-  font-family: Inter, Arial, sans-serif;
+  font-family: 'forma-djr-micro', Arial, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .preopening__slide h3 {
@@ -112,9 +112,9 @@
 
 .preopening__slide p {
   margin: 20px 0 0;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .preopening__controls {
@@ -131,23 +131,24 @@
   height: 1px;
   padding: 0;
   border: 0;
-  background: rgba(22, 21, 18, .24);
+  background: rgba(22, 21, 18, .16);
   cursor: pointer;
+  transform: scaleX(1);
   transition: background-color .35s ease, transform .35s ease;
 }
 
-.preopening__pagination button.is-active { background: var(--ink); transform: scaleY(2); }
+.preopening__pagination button.is-active { background: var(--ink); transform: scaleX(1.12); }
 .preopening__pagination button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
 
 @media (max-width: 760px) {
   .hotel-detail { padding: 38px 24px 68px; }
   .hotel-detail__intro { margin-bottom: 58px; }
   .hotel-detail__intro h1 { font-size: 36px; }
-  .hotel-detail__intro p { margin-top: 20px; font-size: 13px; }
-  .detail-item__panel ul { padding: 0 34px 22px 20px; font-size: 13px; }
+  .hotel-detail__intro p { margin-top: 20px; font-size: 18px; }
+  .detail-item__panel ul { padding: 0 34px 22px 20px; font-size: 18px; }
   .preopening { padding-top: 58px; }
   .preopening__header h2 { font-size: 36px; }
-  .preopening__header p { margin-top: 22px; font-size: 13px; }
+  .preopening__header p { margin-top: 22px; font-size: 18px; }
   .preopening { margin-top: 58px; padding: 58px 22px 52px; }
   .preopening__carousel { width: calc(100% - 22px); margin-top: 40px; box-shadow: 10px 9px 0 rgba(22,21,18,.07), 18px 17px 0 rgba(22,21,18,.035); }
   .preopening__slide { min-height: 390px; padding: 48px 28px; }

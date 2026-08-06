@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Inter:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Inter:wght@400&display=swap');
 
 :root {
   --paper: #eee9df;
@@ -8,7 +8,13 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--paper); color: var(--ink); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'forma-djr-micro', Arial, sans-serif;
+  font-weight: 400;
+}
 button { font: inherit; }
 
 .real-estate-detail {
@@ -38,13 +44,13 @@ button { font: inherit; }
 }
 
 .development-area__header h1 span,
-.development-area__header h2 span { font-family: Inter, Arial, sans-serif; font-size: .82em; font-weight: 300; }
+.development-area__header h2 span { font-family: 'forma-djr-micro', Arial, sans-serif; font-size: .82em; font-weight: 400; }
 
 .development-area__header p {
   margin: 23px 0 0;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.38;
 }
 
@@ -110,9 +116,9 @@ button { font: inherit; }
   max-width: 690px;
   margin: 0;
   padding: 0 46px 25px 6px;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.55;
 }
 
@@ -124,12 +130,12 @@ button { font: inherit; }
   .development-area + .development-area { padding-top: 56px; }
   .development-area__header { max-width: none; }
   .development-area__header h1, .development-area__header h2 { font-size: clamp(23px, 6.5vw, 29px); }
-  .development-area__header p { margin-top: 18px; font-size: 13px; line-height: 1.5; }
+  .development-area__header p { margin-top: 18px; font-size: 18px; line-height: 1.5; }
   .development-area__body { margin-top: 30px; grid-template-columns: 1fr; gap: 30px; }
   .development-area__body > img { aspect-ratio: 1 / .9; }
   .detail-list { padding-top: 0; }
   .detail-item button { min-height: 68px; padding-right: 5px; font-size: 21px; }
-  .detail-item__panel p { padding: 0 34px 23px 4px; font-size: 13px; }
+  .detail-item__panel p { padding: 0 34px 23px 4px; font-size: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

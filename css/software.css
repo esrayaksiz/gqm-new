@@ -14,9 +14,9 @@
 .software-detail__intro p {
   max-width: 650px;
   margin: 26px 0 0;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -25,15 +25,15 @@
 .software-detail .detail-item__panel ul {
   margin: 0;
   padding: 0 44px 24px 24px;
-  font-family: Inter, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 300;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.7;
 }
 
 @media (max-width: 760px) {
   .software-detail__intro { margin-bottom: 58px; }
   .software-detail__intro h1 { font-size: 36px; }
-  .software-detail__intro p { margin-top: 20px; font-size: 13px; }
+  .software-detail__intro p { margin-top: 20px; font-size: 18px; }
   .software-detail .detail-item__panel ul { padding: 0 30px 22px 20px; }
 }
