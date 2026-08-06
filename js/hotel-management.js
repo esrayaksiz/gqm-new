@@ -10,13 +10,15 @@
     });
   });
 
-  const carousel = document.querySelector('.preopening__carousel');
+  const preopening = document.querySelector('.preopening');
+  const carousel = preopening.querySelector('.preopening__carousel');
   const track = carousel.querySelector('.preopening__track');
   const slides = [...carousel.querySelectorAll('.preopening__slide')];
-  const pagination = carousel.querySelector('.preopening__pagination');
-  const previous = document.querySelector('.preopening__arrow--previous');
-  const next = document.querySelector('.preopening__arrow--next');
+  const pagination = preopening.querySelector('.preopening__pagination');
   let current = 0;
+  let dragStart = 0;
+  let dragDistance = 0;
+  let dragging = false;
 
   const pagers = slides.map((slide, index) => {
     const button = document.createElement('button');
@@ -39,7 +41,34 @@
     });
   }
 
-  previous.addEventListener('click', () => show(current - 1));
-  next.addEventListener('click', () => show(current + 1));
+  carousel.addEventListener('pointerdown', (event) => {
+    dragging = true;
+    dragStart = event.clientX;
+    dragDistance = 0;
+    carousel.classList.add('is-dragging');
+    track.style.transition = 'none';
+    carousel.setPointerCapture(event.pointerId);
+  });
+
+  carousel.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    dragDistance = event.clientX - dragStart;
+    track.style.transform = `translate3d(calc(${-current * 100}% + ${dragDistance}px), 0, 0)`;
+  });
+
+  const finishDrag = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    carousel.classList.remove('is-dragging');
+    track.style.removeProperty('transition');
+    if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
+    const threshold = Math.min(90, carousel.clientWidth * .12);
+    if (dragDistance < -threshold) show(current + 1);
+    else if (dragDistance > threshold) show(current - 1);
+    else show(current);
+  };
+
+  carousel.addEventListener('pointerup', finishDrag);
+  carousel.addEventListener('pointercancel', finishDrag);
   show(0);
 })();

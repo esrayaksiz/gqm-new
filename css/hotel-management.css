@@ -71,7 +71,12 @@
   background: #f7f4ed;
   color: #161512;
   box-shadow: 24px 18px 0 rgba(22, 21, 18, .075), 46px 34px 0 rgba(22, 21, 18, .035);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
 }
+
+.preopening__carousel.is-dragging { cursor: grabbing; }
 
 .preopening__track {
   display: flex;
@@ -120,37 +125,19 @@
   gap: clamp(22px, 3vw, 42px);
 }
 
-.preopening__pagination { display: flex; justify-content: center; gap: 8px; }
+.preopening__pagination { display: flex; justify-content: center; gap: 6px; }
 .preopening__pagination button {
-  width: 8px;
-  height: 8px;
+  width: clamp(18px, 2.1vw, 30px);
+  height: 1px;
   padding: 0;
-  border-radius: 50%;
   border: 0;
-  background: rgba(22, 21, 18, .18);
+  background: rgba(22, 21, 18, .24);
   cursor: pointer;
+  transition: background-color .35s ease, transform .35s ease;
 }
 
-.preopening__pagination button.is-active { background: var(--ink); }
+.preopening__pagination button.is-active { background: var(--ink); transform: scaleY(2); }
 .preopening__pagination button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
-
-.preopening__arrow {
-  width: 62px;
-  height: 62px;
-  padding: 0;
-  border: 1px solid rgba(22, 21, 18, .28);
-  background: transparent;
-  color: var(--ink);
-  font-family: Georgia, serif;
-  font-size: 34px;
-  font-weight: 300;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color .3s ease, background-color .3s ease;
-}
-
-.preopening__arrow:hover { border-color: rgba(22, 21, 18, .7); background: rgba(22, 21, 18, .035); }
-.preopening__arrow:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
 
 @media (max-width: 760px) {
   .hotel-detail { padding: 38px 24px 68px; }
@@ -166,8 +153,8 @@
   .preopening__slide { min-height: 390px; padding: 48px 28px; }
   .preopening__slide h3 { font-size: 28px; }
   .preopening__controls { margin-top: 38px; gap: 18px; }
-  .preopening__pagination { gap: 6px; }
-  .preopening__arrow { width: 50px; height: 50px; font-size: 29px; }
+  .preopening__pagination { gap: 4px; }
+  .preopening__pagination button { width: 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
