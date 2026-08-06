@@ -1311,7 +1311,7 @@ body.real-estate-panel-open > main {
 }
 
 .project-detail__image {
-  background-image: url('../assets/images/project-ramada-turkistan.png');
+  background-image: url('../assets/images/project-ramada-turkistan-optimized.webp');
   background-size: 370.7% auto;
 }
 
@@ -1320,7 +1320,7 @@ body.real-estate-panel-open > main {
 
 .project-detail__image--turkistan-room,
 .project-detail__image--turkistan-lounge {
-  background-image: url('../assets/images/project-ramada-turkistan-secondary.png');
+  background-image: url('../assets/images/project-ramada-turkistan-secondary-optimized.webp');
   background-size: 225.9% auto;
 }
 
