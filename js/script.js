@@ -104,7 +104,7 @@
     );
     logo.style.removeProperty('--hero-logo-translate-x');
     logo.style.removeProperty('--hero-logo-translate-y');
-    logo.style.removeProperty('--hero-logo-scale');
+    logo.style.removeProperty('--hero-logo-svg-scale');
     window.clearTimeout(collapseTimer);
     window.clearTimeout(fadeTimer);
   };
@@ -123,9 +123,8 @@
     baseDocumentCenterY = rect.top + window.scrollY + rect.height / 2;
     finalViewportCenterY = baseDocumentCenterY;
 
-    const mobile = window.matchMedia('(max-width: 760px)').matches;
-    startScale = mobile ? 2.05 : 3;
-    defaultDuration = mobile ? 820 : 1120;
+    startScale = 3;
+    defaultDuration = 1120;
   };
 
   const render = () => {
@@ -148,7 +147,8 @@
       '--hero-logo-translate-y',
       `${desiredViewportCenterY - currentBaseViewportY}px`,
     );
-    logo.style.setProperty('--hero-logo-scale', mix(startScale, 1, progress).toFixed(4));
+    const visualScale = mix(startScale, 1, progress);
+    logo.style.setProperty('--hero-logo-svg-scale', (visualScale / startScale).toFixed(6));
   };
 
   const scheduleCollapse = () => {
@@ -159,8 +159,7 @@
 
   const scheduleFadeOut = () => {
     window.clearTimeout(fadeTimer);
-    const mobile = window.matchMedia('(max-width: 760px)').matches;
-    const delay = progress >= 0.98 ? (mobile ? 280 : 400) : (mobile ? 820 : 1080);
+    const delay = progress >= 0.98 ? 400 : 1080;
     fadeTimer = window.setTimeout(() => logo.classList.add('is-logo-hidden'), delay);
   };
 
@@ -173,7 +172,7 @@
     logo.classList.add('is-logo-settled');
     logo.style.removeProperty('--hero-logo-translate-x');
     logo.style.removeProperty('--hero-logo-translate-y');
-    logo.style.removeProperty('--hero-logo-scale');
+    logo.style.removeProperty('--hero-logo-svg-scale');
   };
 
   const animateFrame = (now) => {
@@ -221,7 +220,7 @@
       logo.classList.remove('is-logo-settled');
       if (!hasScrolledAway) {
         hasScrolledAway = true;
-        animateTo(1, window.matchMedia('(max-width: 760px)').matches ? 680 : 880);
+        animateTo(1, 880);
         scheduleFadeOut();
       } else if (!frame) {
         render();
@@ -420,9 +419,29 @@
     const frame = panel.querySelector('.real-estate-reveal__frame');
     trigger.setAttribute('aria-expanded', 'false');
 
+    function resetFrameScroll() {
+      try {
+        const frameDocument = frame.contentDocument;
+        const documentElement = frameDocument?.documentElement;
+        const previousScrollBehavior = documentElement?.style.scrollBehavior || '';
+        if (documentElement) documentElement.style.scrollBehavior = 'auto';
+        frame.contentWindow?.scrollTo(0, 0);
+        if (documentElement) documentElement.scrollTop = 0;
+        if (frameDocument?.body) frameDocument.body.scrollTop = 0;
+        if (documentElement) documentElement.style.scrollBehavior = previousScrollBehavior;
+      } catch {
+        // The detail frames are same-origin; keep opening intact if access is unavailable.
+      }
+    }
+
     trigger.addEventListener('click', (event) => {
       event.preventDefault();
-      if (!frame.src) frame.src = frame.dataset.src;
+      if (!frame.getAttribute('src')) {
+        frame.addEventListener('load', resetFrameScroll, { once: true });
+        frame.src = frame.dataset.src;
+      } else {
+        resetFrameScroll();
+      }
       activePanel = panel;
       activeTrigger = trigger;
       panel.setAttribute('aria-hidden', 'false');
@@ -484,6 +503,8 @@
   let current = 0;
   let autoplayTimer;
   let loopFallback;
+  let resetFrame;
+  let projectsWereVisible = false;
   let wrapping = false;
   let pointerId = null;
   let startX = 0;
@@ -569,6 +590,33 @@
       advanceAutoplay();
       restartAutoplay();
     }, autoplayDelay);
+  }
+
+  function resetToFirstProject() {
+    window.clearTimeout(loopFallback);
+    window.cancelAnimationFrame(resetFrame);
+    wrapping = false;
+    current = 0;
+    dragging = false;
+    if (pointerId !== null && viewport.hasPointerCapture(pointerId)) {
+      viewport.releasePointerCapture(pointerId);
+    }
+    pointerId = null;
+    deltaX = 0;
+    axis = null;
+    viewport.classList.remove('is-dragging');
+
+    const transitionElements = [track, loopClone, ...projects];
+    transitionElements.forEach((element) => { element.style.transition = 'none'; });
+    render();
+    viewport.querySelectorAll('[data-project-pair-carousel]').forEach((carousel) => {
+      carousel.dispatchEvent(new Event('carousel:reset'));
+    });
+    track.getBoundingClientRect();
+    resetFrame = window.requestAnimationFrame(() => {
+      transitionElements.forEach((element) => element.style.removeProperty('transition'));
+    });
+    restartAutoplay();
   }
 
   function beginDrag(event) {
@@ -672,6 +720,13 @@
     });
   });
 
+  const projectVisibilityObserver = new IntersectionObserver(([entry]) => {
+    const isVisible = entry.isIntersecting && entry.intersectionRatio >= .08;
+    if (isVisible && !projectsWereVisible) resetToFirstProject();
+    projectsWereVisible = isVisible;
+  }, { threshold: [.08] });
+  projectVisibilityObserver.observe(viewport);
+
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) window.clearTimeout(autoplayTimer);
     else restartAutoplay();
@@ -712,6 +767,14 @@
     next.addEventListener('click', () => {
       current = Math.min(pages.length - 1, current + 1);
       render();
+    });
+
+    carousel.addEventListener('carousel:reset', () => {
+      current = 0;
+      track.style.transition = 'none';
+      render();
+      track.getBoundingClientRect();
+      window.requestAnimationFrame(() => track.style.removeProperty('transition'));
     });
 
     render();
@@ -865,15 +928,46 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (!section || !viewport || !track || !pagination || !previousButton || !nextButton || originalCards.length < 2) return;
 
-  const firstClone = originalCards[0].cloneNode(true);
-  const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
-  [firstClone, lastClone].forEach((clone) => {
+  const EDGE_CLONE_COUNT = Math.min(2, originalCards.length);
+  let teamImagesPreloaded = false;
+
+  function preloadTeamImages() {
+    if (teamImagesPreloaded) return;
+    teamImagesPreloaded = true;
+    const teamImagePreloads = originalCards
+      .map((card) => card.querySelector('img'))
+      .filter(Boolean)
+      .map((sourceImage) => {
+        const preload = new Image();
+        preload.decoding = 'async';
+        preload.src = sourceImage.currentSrc || sourceImage.src;
+        return preload;
+      });
+
+    void Promise.allSettled(teamImagePreloads.map((image) => (
+      typeof image.decode === 'function' ? image.decode() : Promise.resolve()
+    )));
+  }
+
+  const teamPreloadObserver = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    preloadTeamImages();
+    teamPreloadObserver.unobserve(section);
+  }, { rootMargin: '1200px 0px' });
+  teamPreloadObserver.observe(section);
+
+  function createEdgeClone(card) {
+    const clone = card.cloneNode(true);
     clone.dataset.teamClone = '';
     clone.setAttribute('aria-hidden', 'true');
     clone.querySelectorAll('.scroll-reveal, .scroll-reveal-image').forEach((element) => element.classList.add('is-revealed'));
-  });
-  track.prepend(lastClone);
-  track.append(firstClone);
+    return clone;
+  }
+
+  const leadingClones = originalCards.slice(-EDGE_CLONE_COUNT).map(createEdgeClone);
+  const trailingClones = originalCards.slice(0, EDGE_CLONE_COUNT).map(createEdgeClone);
+  track.prepend(...leadingClones);
+  track.append(...trailingClones);
 
   const cards = [...track.querySelectorAll('.team-member')];
   const dots = originalCards.map((card, index) => {
@@ -888,7 +982,7 @@
 
   const AUTOPLAY_DELAY = 6500;
   let currentIndex = 0;
-  let physicalIndex = 1;
+  let physicalIndex = EDGE_CLONE_COUNT;
   let pendingJump = null;
   let currentTranslate = 0;
   let autoplayTimer;
@@ -957,8 +1051,8 @@
 
     if (currentIndex === originalCards.length - 1) {
       currentIndex = 0;
-      physicalIndex = originalCards.length + 1;
-      pendingJump = 1;
+      physicalIndex += 1;
+      pendingJump = EDGE_CLONE_COUNT;
     } else {
       currentIndex += 1;
       physicalIndex += 1;
@@ -974,8 +1068,8 @@
 
     if (currentIndex === 0) {
       currentIndex = originalCards.length - 1;
-      physicalIndex = 0;
-      pendingJump = originalCards.length;
+      physicalIndex -= 1;
+      pendingJump = EDGE_CLONE_COUNT + originalCards.length - 1;
     } else {
       currentIndex -= 1;
       physicalIndex -= 1;
@@ -991,7 +1085,7 @@
       return;
     }
     currentIndex = index;
-    physicalIndex = index + 1;
+    physicalIndex = index + EDGE_CLONE_COUNT;
     pendingJump = null;
     isAnimating = !reducedMotion.matches;
     render();

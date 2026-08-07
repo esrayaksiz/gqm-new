@@ -23,6 +23,8 @@
   let dragging = false;
   let isLooping = false;
   let autoplayTimer;
+  let resetFrame;
+  let wasVisible = false;
 
   firstSlideClone.classList.add('is-loop-clone');
   firstSlideClone.setAttribute('aria-hidden', 'true');
@@ -80,6 +82,20 @@
     }, autoplayDelay);
   }
 
+  function resetToFirstSlide() {
+    window.cancelAnimationFrame(resetFrame);
+    completeLoop();
+    current = 0;
+    dragging = false;
+    dragDistance = 0;
+    carousel.classList.remove('is-dragging');
+    track.style.transition = 'none';
+    show(0);
+    track.getBoundingClientRect();
+    resetFrame = window.requestAnimationFrame(() => track.style.removeProperty('transition'));
+    restartAutoplay();
+  }
+
   track.addEventListener('transitionend', completeLoop);
 
   carousel.addEventListener('pointerdown', (event) => {
@@ -114,6 +130,12 @@
 
   carousel.addEventListener('pointerup', finishDrag);
   carousel.addEventListener('pointercancel', finishDrag);
+  const visibilityObserver = new IntersectionObserver(([entry]) => {
+    const isVisible = entry.isIntersecting && entry.intersectionRatio >= .08;
+    if (isVisible && !wasVisible) resetToFirstSlide();
+    wasVisible = isVisible;
+  }, { threshold: [.08] });
+  visibilityObserver.observe(preopening);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stopAutoplay();
     else restartAutoplay();

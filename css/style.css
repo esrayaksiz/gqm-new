@@ -531,6 +531,7 @@ body.site-menu-open { overflow: hidden; }
 }
 
 .brand {
+  --hero-logo-render-size: 468px;
   display: grid;
   place-items: center;
   justify-self: center;
@@ -553,17 +554,25 @@ body.site-menu-open { overflow: hidden; }
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 156px;
-  height: 156px;
+  width: var(--hero-logo-render-size);
+  height: var(--hero-logo-render-size);
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  transform: translate3d(-50%, -50%, 0) !important;
+  transform: translate3d(-50%, -50%, 0)
+    scale3d(
+      var(--hero-logo-svg-scale, .333333),
+      var(--hero-logo-svg-scale, .333333),
+      1
+    ) !important;
   transform-origin: center center;
   backface-visibility: hidden;
   image-rendering: auto;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
   opacity: 1 !important;
   transition: none !important;
   filter: none;
+  will-change: transform;
 }
 
 .brand.is-scroll-animated {
@@ -573,8 +582,7 @@ body.site-menu-open { overflow: hidden; }
       var(--hero-logo-translate-x, 0),
       var(--hero-logo-translate-y, 0),
       0
-    )
-    scale(var(--hero-logo-scale, 1));
+    );
   transform-origin: center center;
   backface-visibility: hidden;
   transition: opacity 520ms cubic-bezier(.22, 1, .36, 1);
@@ -1406,11 +1414,11 @@ body.real-estate-panel-open > main {
   .menu-button { gap: 10px; }
   .menu-button__icon { width: 25px; gap: 7px; }
   .brand {
+    --hero-logo-render-size: 330px;
     width: 124px;
     height: 70px;
     margin-top: -16px;
   }
-  .brand__logo { width: 110px; height: 110px; }
   .hero__copy { bottom: 88px; min-height: 110px; }
   .hero__copy h1, .hero__copy h2 { font-size: clamp(25px, 7vw, 34px); line-height: 1.16; }
   .hero__copy h1 br, .hero__copy h2 br { display: none; }
@@ -1528,8 +1536,7 @@ body.real-estate-panel-open > main {
   .menu-button, .enquire-button { width: 88px; height: 40px; font-size: 11px; }
   .menu-button { gap: 8px; }
   .menu-button__icon { width: 20px; }
-  .brand { width: 106px; height: 62px; margin-top: -16px; }
-  .brand__logo { width: 96px; height: 96px; }
+  .brand { --hero-logo-render-size: 288px; width: 106px; height: 62px; margin-top: -16px; }
 
   .beyond-management { min-height: 470px; padding-top: 70px; padding-bottom: 62px; }
   .beyond-management h2 { font-size: 36px; }
@@ -2005,6 +2012,10 @@ body.real-estate-panel-open > main {
 
 .team-carousel__viewport.is-dragging .team-section__grid,
 .team-carousel__viewport .team-section__grid.is-jumping {
+  transition: none;
+}
+
+.team-carousel__viewport .team-section__grid.is-jumping .team-member {
   transition: none;
 }
 
