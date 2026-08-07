@@ -127,23 +127,27 @@
 
 .preopening__pagination { display: flex; justify-content: center; gap: 6px; }
 .preopening__pagination button {
-  width: clamp(18px, 2.1vw, 30px);
-  height: 1px;
+  width: clamp(24px, 2.1vw, 30px);
+  height: 32px;
   padding: 0;
   border: 0;
-  background: rgba(22, 21, 18, .16);
+  color: rgba(22, 21, 18, .16);
+  background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
   cursor: pointer;
   transform: scaleX(1);
-  transition: background-color .35s ease, transform .35s ease;
+  transition: color .35s ease, transform .35s ease;
 }
 
-.preopening__pagination button.is-active { background: var(--ink); transform: scaleX(1.12); }
+.preopening__pagination button.is-active {
+  color: var(--ink);
+  transform: scaleX(1.12);
+}
 .preopening__pagination button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
 
 @media (max-width: 760px) {
   .hotel-detail { padding: 38px 24px 68px; }
   .hotel-detail__intro { margin-bottom: 58px; }
-  .hotel-detail__intro h1 { font-size: 36px; }
+  .hotel-detail__intro h1 { font-size: 36px; line-height: 1.14; }
   .hotel-detail__intro p { margin-top: 20px; font-size: 18px; }
   .detail-item__panel ul { padding: 0 34px 22px 20px; font-size: 18px; }
   .preopening { padding-top: 58px; }
@@ -155,7 +159,7 @@
   .preopening__slide h3 { font-size: 28px; }
   .preopening__controls { margin-top: 38px; gap: 18px; }
   .preopening__pagination { gap: 4px; }
-  .preopening__pagination button { width: 15px; }
+  .preopening__pagination button { width: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
