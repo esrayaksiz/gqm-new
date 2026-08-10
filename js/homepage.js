@@ -879,6 +879,8 @@
   const revealTargets = [];
 
   sections.forEach((section) => {
+    if (section.classList.contains('hero')) return;
+
     const textElements = [...section.querySelectorAll('h2, h3, p')]
       .filter((element) => !element.closest('[data-project-loop-clone], .team-carousel__viewport'));
     const imageElements = [...section.querySelectorAll('img, .project-detail__image')]
